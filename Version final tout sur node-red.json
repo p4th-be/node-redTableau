@@ -1,0 +1,572 @@
+[
+    {
+        "id": "206e049a39b21d82",
+        "type": "http in",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "url": "/page3",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 390,
+        "y": 100,
+        "wires": [
+            [
+                "d4a11522240d8d59"
+            ]
+        ]
+    },
+    {
+        "id": "342293f5b2d68a4a",
+        "type": "debug",
+        "z": "8bb8777a74b8fc32",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "1b9d9779204c6f24",
+        "type": "http response",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 730,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "d4a11522240d8d59",
+        "type": "template",
+        "z": "8bb8777a74b8fc32",
+        "name": "page3 template",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\"/>\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>\n  <title>Athénée Royal de Florennes</title>\n  <link href=\"https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@300;400;500&display=swap\" rel=\"stylesheet\"/>\n  <style>\n   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\n\n    :root {\n      --bg: #f4f1ec;\n      --sidebar-bg: #0f1923;\n      --card-bg: #ffffff;\n      --border: #e2ddd6;\n      --text: #1a1a1a;\n      --muted: #8a8278;\n      --accent: #e8533a;\n      --accent2: #3a7de8;\n      --green: #2db87e;\n      --sidebar-text: #f4f1ec;\n      --sidebar-muted: #7a8a99;\n    }\n\n    html, body {\n      width: 100%; height: 100%;\n      font-family: 'Instrument Sans', sans-serif;\n      background: var(--bg);\n      overflow: hidden;\n    }\n\n    body {\n      display: flex;\n      align-items: stretch;\n      justify-content: center;\n      padding: 12px;\n    }\n\n    .shell {\n      display: flex;\n      width: 100%;\n      height: calc(100vh - 24px);\n      border-radius: 20px;\n      overflow: hidden;\n      box-shadow: 0 20px 60px rgba(0,0,0,0.14);\n    }\n\n    .sidebar {\n      width: clamp(190px, 19vw, 270px);\n      flex-shrink: 0;\n      background: var(--sidebar-bg);\n      display: flex;\n      flex-direction: column;\n      padding: clamp(20px,2.5vh,32px) clamp(16px,1.8vw,24px);\n      gap: 0;\n      color: var(--sidebar-text);\n      position: relative;\n      overflow: hidden;\n    }\n\n    .sidebar::before {\n      content: '';\n      position: absolute;\n      top: -60px; right: -60px;\n      width: 200px; height: 200px;\n      border-radius: 50%;\n      background: radial-gradient(circle, rgba(232,83,58,0.18) 0%, transparent 70%);\n      pointer-events: none;\n    }\n\n    .school-tag {\n      font-family: 'Syne', sans-serif;\n      font-size: clamp(9px, 0.75vw, 11px);\n      font-weight: 600;\n      letter-spacing: 0.18em;\n      text-transform: uppercase;\n      color: var(--sidebar-muted);\n      margin-bottom: 6px;\n    }\n\n    .school-name {\n      font-family: 'Syne', sans-serif;\n      font-size: clamp(14px, 1.3vw, 18px);\n      font-weight: 800;\n      line-height: 1.2;\n      color: var(--sidebar-text);\n      margin-bottom: clamp(20px,3vh,36px);\n    }\n\n    .clock-block {\n      background: rgba(255,255,255,0.04);\n      border: 1px solid rgba(255,255,255,0.07);\n      border-radius: 12px;\n      padding: 14px 16px;\n      margin-bottom: clamp(14px,2vh,22px);\n    }\n\n    .clock-time {\n      font-family: 'Syne', sans-serif;\n      font-size: clamp(26px, 3.2vw, 42px);\n      font-weight: 700;\n      letter-spacing: -0.02em;\n      line-height: 1;\n      color: var(--sidebar-text);\n    }\n\n    .clock-date {\n      font-size: clamp(9px, 0.8vw, 12px);\n      color: var(--sidebar-muted);\n      margin-top: 4px;\n      text-transform: capitalize;\n    }\n\n    .weather-block {\n      flex: 1;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      gap: 4px;\n    }\n\n    .weather-label {\n      font-size: clamp(9px, 0.75vw, 11px);\n      font-weight: 600;\n      letter-spacing: 0.14em;\n      text-transform: uppercase;\n      color: var(--sidebar-muted);\n      margin-bottom: 6px;\n    }\n\n    .weather-main {\n      display: flex;\n      align-items: flex-end;\n      gap: 10px;\n    }\n\n    .weather-emoji { font-size: clamp(32px, 4vw, 52px); line-height: 1; }\n\n    .weather-temp {\n      font-family: 'Syne', sans-serif;\n      font-size: clamp(36px, 4.5vw, 58px);\n      font-weight: 800;\n      letter-spacing: -0.03em;\n      line-height: 1;\n    }\n\n    .weather-desc {\n      font-size: clamp(10px, 0.85vw, 13px);\n      color: var(--sidebar-muted);\n      text-transform: capitalize;\n      margin-top: 6px;\n    }\n\n    .weather-stats {\n      display: flex;\n      gap: clamp(12px, 1.6vw, 22px);\n      margin-top: 10px;\n    }\n\n    .wstat { display: flex; flex-direction: column; gap: 2px; }\n\n    .wstat-val {\n      font-family: 'Syne', sans-serif;\n      font-size: clamp(13px, 1.3vw, 17px);\n      font-weight: 700;\n    }\n\n    .wstat-lbl {\n      font-size: clamp(8px, 0.65vw, 10px);\n      color: var(--sidebar-muted);\n      text-transform: uppercase;\n      letter-spacing: 0.12em;\n    }\n\n    .sidebar-imgs {\n      display: flex;\n      gap: 8px;\n      padding-top: clamp(12px,1.5vh,20px);\n      border-top: 1px solid rgba(255,255,255,0.06);\n      margin-top: clamp(12px,1.5vh,20px);\n    }\n\n    .sidebar-imgs img {\n      width: clamp(44px, 5vw, 64px);\n      height: clamp(44px, 5vw, 64px);\n      object-fit: cover;\n      border-radius: 8px;\n      opacity: 0.85;\n    }\n\n    .main {\n      flex: 1;\n      display: flex;\n      flex-direction: column;\n      background: var(--bg);\n      padding: clamp(16px,2.5vw,36px) clamp(16px,3vw,40px);\n      gap: clamp(10px,1.5vh,18px);\n      min-width: 0;\n      overflow: hidden;\n    }\n\n    .main-header {\n      display: flex;\n      align-items: baseline;\n      justify-content: space-between;\n      flex-shrink: 0;\n    }\n\n    .main-title {\n      font-family: 'Syne', sans-serif;\n      font-size: clamp(18px, 2vw, 26px);\n      font-weight: 800;\n      color: var(--text);\n      letter-spacing: -0.02em;\n    }\n\n    .week-chip {\n      font-size: clamp(10px, 0.85vw, 12px);\n      font-weight: 500;\n      color: var(--muted);\n      background: white;\n      border: 1px solid var(--border);\n      border-radius: 20px;\n      padding: 4px 12px;\n    }\n\n    .columns {\n      display: grid;\n      grid-template-columns: 1fr 1fr;\n      gap: clamp(10px, 1.5vw, 20px);\n      flex: 1;\n      min-height: 0;\n    }\n\n    /* ── LEFT COLUMN: alternates absents / avenir ── */\n    .col-left {\n      display: flex;\n      flex-direction: column;\n      gap: clamp(8px, 1vh, 12px);\n      min-height: 0;\n      overflow: hidden;\n      position: relative;\n    }\n\n    .col-title {\n      font-family: 'Syne', sans-serif;\n      font-size: clamp(11px, 1vw, 14px);\n      font-weight: 700;\n      color: var(--text);\n      letter-spacing: 0.04em;\n      text-transform: uppercase;\n      flex-shrink: 0;\n      transition: opacity 0.35s ease;\n    }\n\n    .cards-wrap {\n      display: flex;\n      flex-direction: column;\n      gap: 8px;\n      overflow: hidden;\n      flex: 1;\n      transition: opacity 0.35s ease, transform 0.35s ease;\n    }\n\n    .card {\n      background: var(--card-bg);\n      border: 1px solid var(--border);\n      border-radius: 12px;\n      padding: clamp(10px, 1.1vw, 15px) clamp(12px, 1.3vw, 18px);\n      animation: slideUp 0.35s ease both;\n      flex-shrink: 0;\n    }\n\n    .card-name {\n      font-family: 'Syne', sans-serif;\n      font-size: clamp(12px, 1.1vw, 15px);\n      font-weight: 700;\n      color: var(--text);\n      display: flex;\n      align-items: center;\n      gap: 8px;\n    }\n\n    .card-name::before {\n      content: '';\n      display: inline-block;\n      width: 6px; height: 6px;\n      border-radius: 50%;\n      background: var(--accent);\n      flex-shrink: 0;\n    }\n\n    .card-name.avenir::before { background: var(--accent2); }\n    .card-name.comunicado::before { background: var(--green); }\n\n    .card-detail {\n      font-size: clamp(10px, 0.9vw, 13px);\n      color: var(--muted);\n      margin-top: 6px;\n      padding-top: 6px;\n      border-top: 1px solid var(--border);\n      line-height: 1.55;\n    }\n\n    .empty {\n      font-size: clamp(11px, 0.95vw, 13px);\n      color: var(--muted);\n      font-style: italic;\n    }\n\n    @keyframes slideUp {\n      from { opacity: 0; transform: translateY(8px); }\n      to   { opacity: 1; transform: translateY(0); }\n    }\n\n    /* ── RIGHT COLUMN: panels ── */\n    .col-right {\n      position: relative;\n      min-height: 0;\n      overflow: hidden;\n    }\n\n    .panel {\n      position: absolute;\n      inset: 0;\n      display: flex;\n      flex-direction: column;\n      gap: 10px;\n      opacity: 0;\n      pointer-events: none;\n      transition: opacity 0.55s ease;\n    }\n\n    .panel.active {\n      opacity: 1;\n      pointer-events: auto;\n    }\n\n    .act-header {\n      display: flex;\n      align-items: center;\n      justify-content: space-between;\n      flex-shrink: 0;\n    }\n\n    #pageDots, #comDots { display: flex; gap: 5px; }\n\n    #activites, #comunicados-content {\n      flex: 1;\n      min-height: 0;\n      overflow: hidden;\n      position: relative;\n    }\n\n    /* foto panel */\n    .foto-label {\n      font-family: 'Syne', sans-serif;\n      font-size: clamp(11px, 1vw, 14px);\n      font-weight: 700;\n      color: var(--text);\n      letter-spacing: 0.04em;\n      text-transform: uppercase;\n      flex-shrink: 0;\n      display: flex;\n      align-items: center;\n      gap: 7px;\n    }\n\n    .live-dot {\n      width: 6px; height: 6px;\n      border-radius: 50%;\n      background: var(--green);\n      animation: livepulse 2s ease-in-out infinite;\n    }\n\n    @keyframes livepulse { 0%,100%{opacity:1} 50%{opacity:0.2} }\n\n    .foto-frame {\n      flex: 1;\n      min-height: 0;\n      border-radius: 14px;\n      overflow: hidden;\n      background: white;\n      border: 1px solid var(--border);\n      position: relative;\n    }\n\n    .foto-frame img {\n      position: absolute;\n      inset: 0;\n      width: 100%; height: 100%;\n      object-fit: cover;\n      opacity: 0;\n      transition: opacity 0.5s ease;\n    }\n\n    .foto-frame img.vis { opacity: 1; }\n\n    .foto-empty {\n      position: absolute;\n      inset: 0;\n      display: flex;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center;\n      gap: 10px;\n      color: var(--muted);\n    }\n\n    .foto-empty-icon {\n      width: 44px; height: 44px;\n      border: 1.5px solid var(--border);\n      border-radius: 50%;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n    }\n\n    .foto-empty-icon svg { width: 20px; height: 20px; stroke: var(--muted); }\n    .foto-empty span { font-size: clamp(10px,0.85vw,12px); }\n\n    /* switch dots bottom */\n    .switch-bar {\n      position: absolute;\n      bottom: clamp(8px,1vh,14px);\n      left: 50%;\n      transform: translateX(-50%);\n      display: flex;\n      gap: 6px;\n      z-index: 10;\n    }\n\n    .switch-dot {\n      width: 7px; height: 7px;\n      border-radius: 50%;\n      background: var(--border);\n      transition: background 0.3s, transform 0.3s;\n      cursor: pointer;\n    }\n\n    .switch-dot.active {\n      background: var(--accent);\n      transform: scale(1.25);\n    }\n\n    /* left panel switch dots */\n    .left-switch-bar {\n      display: flex;\n      gap: 6px;\n      justify-content: flex-end;\n    }\n\n    .left-switch-dot {\n      width: 7px; height: 7px;\n      border-radius: 50%;\n      background: var(--border);\n      transition: background 0.3s, transform 0.3s;\n    }\n\n    .left-switch-dot.active {\n      background: var(--accent2);\n      transform: scale(1.25);\n    }\n\n    .watermark {\n      position: fixed;\n      bottom: 8px; left: 14px;\n      font-family: 'Instrument Sans', sans-serif;\n      font-size: 11px;\n      color: rgba(244,241,236,0.45);\n      pointer-events: none;\n      user-select: none;\n      letter-spacing: 0.4px;\n    }\n\n    #net-badge {\n      position: fixed;\n      bottom: 14px;\n      left: 16px;\n      z-index: 9999;\n      display: inline-flex;\n      align-items: center;\n      gap: 6px;\n      padding: 5px 10px 5px 8px;\n      border-radius: 20px;\n      font-family: 'Instrument Sans', sans-serif;\n      font-size: 11px;\n      font-weight: 500;\n      letter-spacing: 0.02em;\n      border: 1px solid;\n      cursor: default;\n      user-select: none;\n      transition: opacity 0.4s ease, transform 0.4s ease;\n      pointer-events: none;\n    }\n\n    #net-badge.online {\n      background: rgba(45,184,126,0.12);\n      border-color: rgba(45,184,126,0.4);\n      color: #1a8a5c;\n    }\n\n    #net-badge.offline {\n      background: rgba(232,83,58,0.12);\n      border-color: rgba(232,83,58,0.4);\n      color: #b84020;\n    }\n\n    #net-badge.online.hide {\n      opacity: 0;\n      transform: translateY(6px);\n    }\n\n    #net-dot {\n      width: 6px; height: 6px;\n      border-radius: 50%;\n      flex-shrink: 0;\n    }\n\n    #net-badge.online  #net-dot { background: var(--green); animation: livepulse 2s ease-in-out infinite; }\n    #net-badge.offline #net-dot { background: var(--accent); animation: none; }\n  </style>\n</head>\n<body>\n<div class=\"shell\">\n\n  <!-- ── SIDEBAR ── -->\n  <aside class=\"sidebar\">\n    <div class=\"school-tag\">École</div>\n    <div class=\"school-name\">Athénée Royal<br>de Florennes</div>\n\n    <div class=\"clock-block\">\n      <div class=\"clock-time\" id=\"relHora\">--:--:--</div>\n      <div class=\"clock-date\" id=\"relData\">--/--/----</div>\n      <div style=\"margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.07); font-size:11px; color:rgba(244,241,236,0.6); letter-spacing:0.3px;\">p4th.be</div>\n    </div>\n\n    <div class=\"weather-block\">\n      <div class=\"weather-label\">Météo · Florennes</div>\n      <div class=\"weather-main\">\n        <div class=\"weather-emoji\" id=\"wEmoji\">⏳</div>\n        <div class=\"weather-temp\" id=\"wTemp\">--°</div>\n      </div>\n      <div class=\"weather-desc\" id=\"wDesc\">Chargement...</div>\n      <div class=\"weather-stats\">\n        <div class=\"wstat\">\n          <span class=\"wstat-val\" id=\"wHum\">--</span>\n          <span class=\"wstat-lbl\">Humidité</span>\n        </div>\n        <div class=\"wstat\">\n          <span class=\"wstat-val\" id=\"wWind\">--</span>\n          <span class=\"wstat-lbl\">Vent</span>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"sidebar-imgs\">\n      <img src=\"https://www.p4th.be/wp-content/uploads/2026/04/1000051899.png\" alt=\"QR\"/>\n    </div>\n  </aside>\n\n  <!-- ── MAIN ── -->\n  <main class=\"main\">\n    <div class=\"main-header\">\n      <div class=\"main-title\">Informations de l'École</div>\n      <div class=\"week-chip\" id=\"weekChip\">Cette semaine</div>\n    </div>\n\n    <div class=\"columns\">\n\n      <!-- LEFT: Absents / Avenir alternés -->\n      <div class=\"col-left\">\n        <div style=\"display:flex;align-items:center;justify-content:space-between;flex-shrink:0;\">\n          <div class=\"col-title\" id=\"leftTitle\">Professeurs Absents</div>\n          <div class=\"left-switch-bar\">\n            <div class=\"left-switch-dot active\" id=\"ldot0\"></div>\n            <div class=\"left-switch-dot\" id=\"ldot1\"></div>\n          </div>\n        </div>\n        <div class=\"cards-wrap\" id=\"leftCards\"></div>\n      </div>\n\n      <!-- RIGHT: Activités / Comunicados / Photo -->\n      <div class=\"col-right\">\n\n        <div class=\"panel active\" id=\"panelActivites\">\n          <div class=\"act-header\">\n            <div class=\"col-title\">Activités Scolaires</div>\n            <div id=\"pageDots\"></div>\n          </div>\n          <div id=\"activites\"></div>\n        </div>\n\n        <div class=\"panel\" id=\"panelComunicados\">\n          <div class=\"act-header\">\n            <div class=\"col-title\" style=\"color:var(--red);\">annonces</div>\n            <div id=\"comDots\"></div>\n          </div>\n          <div id=\"comunicados-content\"></div>\n        </div>\n\n        <div class=\"panel\" id=\"panelFoto\">\n          <div class=\"foto-label\">\n            <span class=\"live-dot\"></span>Photo en direct\n          </div>\n          <div class=\"foto-frame\" id=\"fotoFrame\">\n            <img id=\"fotoImg\" src=\"\" alt=\"\">\n            <div class=\"foto-empty\" id=\"fotoEmpty\">\n              <div class=\"foto-empty-icon\">\n                <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n                  <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/>\n                  <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"/>\n                  <path d=\"M21 15l-5-5L5 21\"/>\n                </svg>\n              </div>\n              <span>Aucune photo</span>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"switch-bar\">\n          <div class=\"switch-dot active\" id=\"dot0\" onclick=\"showRightPanel(0)\"></div>\n          <div class=\"switch-dot\" id=\"dot1\" onclick=\"showRightPanel(1)\"></div>\n          <div class=\"switch-dot\" id=\"dot2\" onclick=\"showRightPanel(2)\"></div>\n        </div>\n      </div>\n\n    </div>\n  </main>\n</div>\n\n<div id=\"net-badge\" class=\"online\">\n  <span id=\"net-dot\"></span>\n  <span id=\"net-text\">Online</span>\n</div>\n\n<div class=\"watermark\">p4th.be</div>\n\n<script>\n  /* ══ RIGHT PANEL: 0=Activités(10s) 1=Comunicados(10s) 2=Foto(40s) ══ */\n  var RIGHT_PANELS = ['panelActivites','panelComunicados','panelFoto'];\n  var RIGHT_DURATIONS = [10000, 10000, 40000];\n  var currentRight = 0;\n  var rightTimer = null;\n\n  function showRightPanel(idx) {\n    RIGHT_PANELS.forEach(function(id, i) {\n      document.getElementById(id).classList.toggle('active', i === idx);\n    });\n    ['dot0','dot1','dot2'].forEach(function(id, i) {\n      document.getElementById(id).classList.toggle('active', i === idx);\n    });\n    currentRight = idx;\n  }\n\n  function scheduleNextRight() {\n    if (rightTimer) clearTimeout(rightTimer);\n    rightTimer = setTimeout(function() {\n      currentRight = (currentRight + 1) % RIGHT_PANELS.length;\n      showRightPanel(currentRight);\n      scheduleNextRight();\n    }, RIGHT_DURATIONS[currentRight]);\n  }\n\n  /* ══ LEFT PANEL: 0=Absents(30s) 1=Avenir(30s) ══ */\n  var currentLeft = 0;\n  var leftData = { absents: [], avenir: [] };\n\n  function showLeftPanel(idx) {\n    currentLeft = idx;\n    var title = idx === 0 ? 'Professeurs Absents' : 'Absence à Venir';\n    var col = idx === 0 ? 'absents' : 'avenir';\n    var dotClass = idx === 0 ? 'var(--accent)' : 'var(--accent2)';\n    var el = document.getElementById('leftTitle');\n    var cards = document.getElementById('leftCards');\n\n    el.style.opacity = '0';\n    cards.style.opacity = '0';\n    cards.style.transform = 'translateY(10px)';\n\n    setTimeout(function() {\n      el.textContent = title;\n      el.style.opacity = '1';\n      var arr = leftData[col];\n      if (!arr || !arr.length) {\n        cards.innerHTML = '<div class=\"empty\">Aucune information.</div>';\n      } else {\n        cards.innerHTML = arr.map(function(v) {\n          return '<div class=\"card\"><div class=\"card-name ' + (idx===1?'avenir':'') + '\">' + v + '</div></div>';\n        }).join('');\n      }\n      cards.style.opacity = '1';\n      cards.style.transform = 'translateY(0)';\n      cards.style.transition = 'opacity 0.35s ease, transform 0.35s ease';\n      document.getElementById('ldot0').classList.toggle('active', idx === 0);\n      document.getElementById('ldot1').classList.toggle('active', idx === 1);\n    }, 300);\n  }\n\n  function startLeftSwitch() {\n    setInterval(function() {\n      currentLeft = (currentLeft + 1) % 2;\n      showLeftPanel(currentLeft);\n    }, 15000);\n  }\n\n  /* ══ CLOCK ══ */\n  function tick() {\n    var now = new Date();\n    document.getElementById('relHora').textContent =\n      now.toLocaleTimeString('fr-BE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });\n    document.getElementById('relData').textContent =\n      now.toLocaleDateString('fr-BE', { weekday: 'long', day: '2-digit', month: 'long' });\n  }\n\n  /* ══ WEATHER ══ */\n  function getEmoji(d) {\n    d = d.toLowerCase();\n    if (d.includes('clear') || d.includes('sun'))     return '☀️';\n    if (d.includes('rain') || d.includes('drizzle'))  return '🌧️';\n    if (d.includes('thunder') || d.includes('storm')) return '⛈️';\n    if (d.includes('snow'))                           return '❄️';\n    if (d.includes('fog') || d.includes('mist'))      return '🌫️';\n    if (d.includes('cloud') || d.includes('overcast'))return '☁️';\n    return '🌤️';\n  }\n\n  async function loadWeather() {\n    try {\n      var r = await fetch('/page2');\n      var h = await r.text();\n      var doc = new DOMParser().parseFromString(h, 'text/html');\n      var temp  = doc.querySelector('.temp')?.textContent.trim();\n      var ps    = doc.querySelectorAll('p');\n      var desc  = ps[0]?.textContent.trim() || '';\n      var hum   = ps[1]?.textContent.replace('Humidité:','').trim() || '--';\n      var wind  = ps[2]?.textContent.replace('Vents:','').trim() || '--';\n      if (temp) document.getElementById('wTemp').textContent = temp;\n      if (desc) {\n        document.getElementById('wDesc').textContent = desc;\n        document.getElementById('wEmoji').textContent = getEmoji(desc);\n      }\n      document.getElementById('wHum').textContent  = hum;\n      document.getElementById('wWind').textContent = wind;\n    } catch(e) {\n      document.getElementById('wDesc').textContent = 'Indisponible';\n    }\n  }\n\n  /* ══ ACTIVITÉS SLIDESHOW ══ */\n  var MAX_PAR_PAGE = 4;\n  var activitesPages = [];\n  var currentActPage = 0;\n  var actSlideInterval = null;\n\n  function renderActivites(arr) {\n    if (!arr || !arr.length) {\n      if (actSlideInterval) clearInterval(actSlideInterval);\n      document.getElementById('activites').innerHTML = '<div class=\"empty\">Aucune activité cette semaine.</div>';\n      document.getElementById('pageDots').innerHTML = '';\n      return;\n    }\n    var pages = [];\n    for (var i = 0; i < arr.length; i += MAX_PAR_PAGE) {\n      pages.push(arr.slice(i, i + MAX_PAR_PAGE));\n    }\n    if (JSON.stringify(pages) === JSON.stringify(activitesPages)) return;\n    activitesPages = pages;\n    currentActPage = 0;\n    showActPage(0);\n    startActSlideshow();\n  }\n\n  function showActPage(idx) {\n    var el = document.getElementById('activites');\n    var page = activitesPages[idx];\n    el.style.opacity = '0';\n    el.style.transform = 'translateY(10px)';\n    el.style.transition = 'opacity 0.35s ease, transform 0.35s ease';\n    setTimeout(function() {\n      el.innerHTML = page ? page.map(function(v) {\n        return '<div class=\"card\"><div class=\"card-name\">' + v + '</div></div>';\n      }).join('') : '<div class=\"empty\">Aucune activité.</div>';\n      el.style.opacity = '1'; el.style.transform = 'translateY(0)';\n      renderActDots();\n    }, 300);\n  }\n\n  function renderActDots() {\n    var d = document.getElementById('pageDots');\n    d.innerHTML = activitesPages.map(function(_, i) {\n      return '<div style=\"width:7px;height:7px;border-radius:50%;background:' +\n        (i === currentActPage ? 'var(--accent)' : 'var(--border)') +\n        ';transition:background 0.3s;cursor:pointer;\" onclick=\"goToActPage(' + i + ')\"></div>';\n    }).join('');\n  }\n\n  function goToActPage(i) { currentActPage = i; showActPage(i); }\n\n  function startActSlideshow() {\n    if (actSlideInterval) clearInterval(actSlideInterval);\n    actSlideInterval = setInterval(function() {\n      currentActPage = (currentActPage + 1) % activitesPages.length;\n      showActPage(currentActPage);\n    }, 8000);\n  }\n\n  /* ══ COMUNICADOS SLIDESHOW ══ */\n  var comPages = [];\n  var currentComPage = 0;\n  var comSlideInterval = null;\n\n  function renderComunicados(arr) {\n    if (!arr || !arr.length) {\n      if (comSlideInterval) clearInterval(comSlideInterval);\n      document.getElementById('comunicados-content').innerHTML = '<div class=\"empty\">Aucun comunicado.</div>';\n      document.getElementById('comDots').innerHTML = '';\n      return;\n    }\n    var pages = [];\n    for (var i = 0; i < arr.length; i += MAX_PAR_PAGE) {\n      pages.push(arr.slice(i, i + MAX_PAR_PAGE));\n    }\n    if (JSON.stringify(pages) === JSON.stringify(comPages)) return;\n    comPages = pages;\n    currentComPage = 0;\n    showComPage(0);\n    startComSlideshow();\n  }\n\n  function showComPage(idx) {\n    var el = document.getElementById('comunicados-content');\n    var page = comPages[idx];\n    el.style.opacity = '0';\n    el.style.transform = 'translateY(10px)';\n    el.style.transition = 'opacity 0.35s ease, transform 0.35s ease';\n    setTimeout(function() {\n      el.innerHTML = page ? page.map(function(v) {\n        return '<div class=\"card\"><div class=\"card-name comunicado\">' + v + '</div></div>';\n      }).join('') : '<div class=\"empty\">Aucun comunicado.</div>';\n      el.style.opacity = '1'; el.style.transform = 'translateY(0)';\n      renderComDots();\n    }, 300);\n  }\n\n  function renderComDots() {\n    var d = document.getElementById('comDots');\n    d.innerHTML = comPages.map(function(_, i) {\n      return '<div style=\"width:7px;height:7px;border-radius:50%;background:' +\n        (i === currentComPage ? 'var(--green)' : 'var(--border)') +\n        ';transition:background 0.3s;\"></div>';\n    }).join('');\n  }\n\n  function startComSlideshow() {\n    if (comSlideInterval) clearInterval(comSlideInterval);\n    comSlideInterval = setInterval(function() {\n      currentComPage = (currentComPage + 1) % comPages.length;\n      showComPage(currentComPage);\n    }, 8000);\n  }\n\n  /* ══ PHOTO POLL ══ */\n  var lastFotoTs = null;\n\n  async function pollFoto() {\n    try {\n      var r = await fetch('/api/foto');\n      var data = await r.json();\n      var img = document.getElementById('fotoImg');\n      var ph  = document.getElementById('fotoEmpty');\n      if (data && data.dataUrl) {\n        if (data.ts !== lastFotoTs) {\n          lastFotoTs = data.ts;\n          img.classList.remove('vis');\n          img.onload = function() { img.classList.add('vis'); ph.style.display = 'none'; };\n          img.src = data.dataUrl;\n        }\n      } else {\n        img.classList.remove('vis'); img.src = '';\n        ph.style.display = ''; lastFotoTs = null;\n      }\n    } catch(e) {}\n  }\n\n  /* ══ MAIN DATA LOADER ══ */\n  async function loadDados() {\n    try {\n      var r = await fetch('/api/ecole');\n      if (r.ok) {\n        var d = await r.json();\n        leftData.absents = d.absents || [];\n        leftData.avenir  = d.avenir  || [];\n        showLeftPanel(currentLeft);\n        renderActivites(d.activites || []);\n        renderComunicados(d.comunicados || []);\n      }\n    } catch(e) { console.warn('[ecole]', e.message); }\n  }\n\n  /* ══ ONLINE/OFFLINE ══ */\n  var netBadge = document.getElementById('net-badge');\n  var netText  = document.getElementById('net-text');\n  var hideTimer = null;\n\n  function setOnline() {\n    netBadge.classList.remove('offline'); netBadge.classList.add('online');\n    netText.textContent = 'Online'; netBadge.classList.remove('hide');\n    if (hideTimer) clearTimeout(hideTimer);\n    hideTimer = setTimeout(function(){ netBadge.classList.add('hide'); }, 4000);\n  }\n\n  function setOffline() {\n    if (hideTimer) clearTimeout(hideTimer);\n    netBadge.classList.remove('online','hide'); netBadge.classList.add('offline');\n    netText.textContent = 'Offline';\n  }\n\n  var CHECK_URL = 'https://www.google.com/favicon.ico';\n  var CHECK_TIMEOUT = 5000;\n\n  function isUrlReachable(url) {\n    return fetch(url + '?_=' + Date.now(), { method:'HEAD', cache:'no-store', mode:'no-cors', signal: AbortSignal.timeout(CHECK_TIMEOUT) })\n      .then(function(){ return true; }).catch(function(){ return false; });\n  }\n\n  window.addEventListener('online',  setOnline);\n  window.addEventListener('offline', setOffline);\n  if (navigator.onLine) { setOnline(); } else { setOffline(); }\n\n  setTimeout(function() {\n    if (!navigator.onLine) { waitAndRefresh(); return; }\n    isUrlReachable(CHECK_URL).then(function(ok){ if (ok) location.reload(); else waitAndRefresh(); });\n  }, 300000);\n\n  function waitAndRefresh() {\n    var t = setInterval(function() {\n      if (!navigator.onLine) return;\n      isUrlReachable(CHECK_URL).then(function(ok){ if (ok){ clearInterval(t); location.reload(); } });\n    }, 30000);\n  }\n\n  /* ══ INIT ══ */\n  tick();\n  loadDados();\n  loadWeather();\n  pollFoto();\n  showLeftPanel(0);\n  startLeftSwitch();\n  scheduleNextRight();\n\n  setInterval(tick, 1000);\n  setInterval(loadDados, 10000);\n  setInterval(loadWeather, 300000);\n  setInterval(pollFoto, 2000);\n</script>\n</body>\n</html>",
+        "output": "str",
+        "x": 580,
+        "y": 100,
+        "wires": [
+            [
+                "342293f5b2d68a4a",
+                "1b9d9779204c6f24"
+            ]
+        ]
+    },
+    {
+        "id": "d9c6b878f6478c04",
+        "type": "http in",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "url": "/test1",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 360,
+        "y": 280,
+        "wires": [
+            [
+                "204cae71fb2cf96e"
+            ]
+        ]
+    },
+    {
+        "id": "391e9b1222d3ee76",
+        "type": "http response",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 850,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "204cae71fb2cf96e",
+        "type": "template",
+        "z": "8bb8777a74b8fc32",
+        "name": "test1 - upload photo",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Téléchargement de photo</title>\n<link href=\"https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap\" rel=\"stylesheet\">\n<style>\n  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\n  :root {\n    --bg: #0e0e0e; --surface: #161616; --border: #2a2a2a;\n    --border-hover: #3f3f3f; --text: #f0ede8; --muted: #6b6b6b;\n    --accent: #d4f060; --accent-dark: #b8d440; --danger: #ff5c5c;\n  }\n  body {\n    background: var(--bg); color: var(--text);\n    font-family: 'DM Sans', sans-serif; font-weight: 300;\n    min-height: 100vh; display: flex; align-items: center;\n    justify-content: center; padding: 2rem;\n  }\n  .panel { width: 100%; max-width: 480px; }\n  .header { margin-bottom: 2.5rem; }\n  .label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }\n  h1 { font-size: 28px; font-weight: 500; letter-spacing: -0.02em; line-height: 1; }\n  .drop-zone {\n    border: 1px dashed var(--border-hover); border-radius: 12px;\n    padding: 3rem 2rem; text-align: center; cursor: pointer;\n    transition: border-color 0.2s, background 0.2s; background: var(--surface);\n  }\n  .drop-zone:hover, .drop-zone.dragover { border-color: var(--accent); background: rgba(212,240,96,0.04); }\n  .drop-icon { width: 40px; height: 40px; border: 1px solid var(--border-hover); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }\n  .drop-icon svg { width: 18px; height: 18px; stroke: var(--muted); }\n  .drop-text { font-size: 14px; color: var(--muted); line-height: 1.6; }\n  .drop-text span { color: var(--accent); }\n  .preview-section { display: none; margin-top: 1.5rem; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }\n  .preview-img-wrap { aspect-ratio: 1/1; overflow: hidden; background: #111; border-radius: 12px 12px 0 0; }\n  .preview-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }\n  .preview-info { padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); }\n  .file-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 260px; }\n  .btn-remover { font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 6px 14px; border-radius: 6px; border: none; background: transparent; color: var(--danger); cursor: pointer; transition: background 0.15s; flex-shrink: 0; }\n  .btn-remover:hover { background: rgba(255,92,92,0.1); }\n  .btn-alterar { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 13px; background: var(--accent); color: #0e0e0e; border: none; border-top: 1px solid rgba(0,0,0,0.15); border-radius: 0 0 12px 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.15s; }\n  .btn-alterar:hover { background: var(--accent-dark); }\n  .btn-alterar:disabled { opacity: 0.5; cursor: not-allowed; }\n  .btn-alterar svg { width: 15px; height: 15px; stroke: #0e0e0e; flex-shrink: 0; }\n  .status-bar { margin-top: 1rem; height: 28px; display: flex; align-items: center; }\n  .status-pill { font-family: 'DM Mono', monospace; font-size: 11px; padding: 4px 12px; border-radius: 20px; background: rgba(212,240,96,0.12); color: var(--accent); opacity: 0; transition: opacity 0.3s; }\n  .status-pill.visible { opacity: 1; }\n  .status-pill.error { background: rgba(255,92,92,0.12); color: var(--danger); }\n  .footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }\n  .footer-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }\n  .footer-hint { font-size: 13px; color: var(--muted); line-height: 1.6; }\n  .footer-hint code { font-family: 'DM Mono', monospace; font-size: 11px; background: #1e1e1e; padding: 2px 6px; border-radius: 4px; color: var(--accent); }\n  .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 6px; animation: pulse 2s ease-in-out infinite; }\n  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }\n</style>\n</head>\n<body>\n<div class=\"panel\">\n  <div class=\"header\">\n    <p class=\"label\">Panneau de contrôle</p>\n    <h1>Téléchargement de photo</h1>\n  </div>\n\n  <input type=\"file\" accept=\"image/*\" id=\"fileInput\" style=\"display:none\">\n\n  <div class=\"drop-zone\" id=\"dropZone\">\n    <div class=\"drop-icon\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n        <path d=\"M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12V4M8 8l4-4 4 4\"/>\n      </svg>\n    </div>\n    <p class=\"drop-text\">\n      <span>Appuie pour choisir</span> ou fais glisser ici<br>\n      JPG, PNG, WebP, GIF\n    </p>\n  </div>\n\n  <div class=\"preview-section\" id=\"previewSection\">\n    <div class=\"preview-img-wrap\">\n      <img id=\"previewImg\" src=\"\" alt=\"\">\n    </div>\n    <div class=\"preview-info\">\n      <span class=\"file-name\" id=\"fileName\">—</span>\n      <button class=\"btn-remover\" id=\"btnRemover\" onclick=\"removePhoto()\">Supprimer</button>\n    </div>\n    <button class=\"btn-alterar\" id=\"btnAlterar\" onclick=\"document.getElementById('fileInput').click()\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n        <path d=\"M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12\"/>\n      </svg>\n      Modifier la photo\n    </button>\n  </div>\n\n  <div class=\"status-bar\">\n    <span class=\"status-pill\" id=\"statusPill\"></span>\n  </div>\n\n  <div class=\"footer\">\n    <p class=\"footer-label\"><span class=\"dot\"></span>Affichage en direct</p>\n    <p class=\"footer-hint\">\n      La photo apparaît dans <code>/page3</code> sur Node-RED,<br>\n      sous \"Photo en direct\", actualisée toutes les 2s.\n    </p>\n  </div>\n</div>\n\n<script>\n  function showStatus(msg, isError) {\n    const el = document.getElementById('statusPill');\n    el.textContent = msg;\n    el.classList.toggle('error', !!isError);\n    el.classList.add('visible');\n    clearTimeout(el._t);\n    el._t = setTimeout(() => el.classList.remove('visible'), 3000);\n  }\n\n  function setLoading(loading) {\n    const btn = document.getElementById('btnAlterar');\n    const rem = document.getElementById('btnRemover');\n    btn.disabled = loading;\n    rem.disabled = loading;\n    if (loading) {\n      btn.textContent = 'Envoi...';\n    } else {\n      btn.innerHTML = `<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"width:15px;height:15px;stroke:#0e0e0e;flex-shrink:0;\"><path d=\"M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12\"/></svg> Modifier la photo`;\n    }\n  }\n\n  function renderPreview(dataUrl, name) {\n    document.getElementById('previewImg').src = dataUrl;\n    document.getElementById('fileName').textContent = name;\n    document.getElementById('previewSection').style.display = 'block';\n    document.getElementById('dropZone').style.display = 'none';\n  }\n\n  function showDrop() {\n    document.getElementById('previewSection').style.display = 'none';\n    document.getElementById('dropZone').style.display = '';\n  }\n\n  async function savePhoto(file) {\n    const reader = new FileReader();\n    reader.onload = async (e) => {\n      const dataUrl = e.target.result;\n      const payload = { dataUrl, name: file.name, ts: Date.now() };\n      setLoading(true);\n      try {\n        const res = await fetch('/api/foto', {\n          method: 'POST',\n          headers: { 'Content-Type': 'application/json' },\n          body: JSON.stringify(payload)\n        });\n        if (!res.ok) throw new Error('HTTP ' + res.status);\n        renderPreview(dataUrl, file.name);\n        showStatus('Photo envoyée ✓');\n      } catch (err) {\n        showStatus('Erreur : ' + err.message, true);\n      } finally {\n        setLoading(false);\n      }\n    };\n    reader.readAsDataURL(file);\n  }\n\n  async function removePhoto() {\n    setLoading(true);\n    try {\n      await fetch('/api/foto', { method: 'DELETE' });\n      showDrop();\n      showStatus('Photo supprimée');\n    } catch (err) {\n      showStatus('Erreur : ' + err.message, true);\n    } finally {\n      setLoading(false);\n    }\n  }\n\n  document.getElementById('fileInput').addEventListener('change', (e) => {\n    if (e.target.files[0]) savePhoto(e.target.files[0]);\n    e.target.value = '';\n  });\n\n  const dz = document.getElementById('dropZone');\n  dz.addEventListener('click', () => document.getElementById('fileInput').click());\n  dz.addEventListener('dragover', (e) => { e.preventDefault(); dz.classList.add('dragover'); });\n  dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));\n  dz.addEventListener('drop', (e) => {\n    e.preventDefault(); dz.classList.remove('dragover');\n    const f = e.dataTransfer.files[0];\n    if (f && f.type.startsWith('image/')) savePhoto(f);\n  });\n\n  async function checkExisting() {\n    try {\n      const res = await fetch('/api/foto');\n      const data = await res.json();\n      if (data && data.dataUrl) renderPreview(data.dataUrl, data.name || 'photo');\n    } catch {}\n  }\n  checkExisting();\n</script>\n</body>\n</html>",
+        "output": "str",
+        "x": 580,
+        "y": 280,
+        "wires": [
+            [
+                "391e9b1222d3ee76"
+            ]
+        ]
+    },
+    {
+        "id": "4719d6bea3ec8b91",
+        "type": "http in",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "url": "/test2",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 360,
+        "y": 320,
+        "wires": [
+            [
+                "15c71f0e6e52b271"
+            ]
+        ]
+    },
+    {
+        "id": "ad7770c70fb4f92f",
+        "type": "http response",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 850,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "15c71f0e6e52b271",
+        "type": "template",
+        "z": "8bb8777a74b8fc32",
+        "name": "test2 - affichage photo",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Affichage Photo</title>\n<link href=\"https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap\" rel=\"stylesheet\">\n<style>\n  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\n  :root { --bg: #0a0a0a; --text: #f0ede8; --muted: #444; --accent: #d4f060; }\n  body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }\n  .frame { width: min(80vw, 80vh, 600px); height: min(80vw, 80vh, 600px); position: relative; border-radius: 4px; overflow: hidden; background: #111; }\n  #photo { width: 100%; height: 100%; object-fit: cover; display: none; opacity: 0; transition: opacity 0.4s ease; }\n  #photo.loaded { opacity: 1; }\n  .empty-state { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }\n  .empty-icon { width: 48px; height: 48px; border: 1px solid #2a2a2a; border-radius: 50%; display: flex; align-items: center; justify-content: center; }\n  .empty-icon svg { width: 20px; height: 20px; stroke: #333; }\n  .empty-text { font-size: 11px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }\n  .status-bar { margin-top: 1.5rem; display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }\n  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; animation: pulse 2s ease-in-out infinite; }\n  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }\n</style>\n</head>\n<body>\n<div class=\"frame\" id=\"frame\">\n  <img id=\"photo\" src=\"\" alt=\"\">\n  <div class=\"empty-state\" id=\"emptyState\">\n    <div class=\"empty-icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"/><path d=\"M21 15l-5-5L5 21\"/></svg></div>\n    <p class=\"empty-text\">Aucune photo</p>\n  </div>\n</div>\n<div class=\"status-bar\"><span class=\"dot\"></span><span id=\"statusText\">En attente de photo...</span></div>\n<script>\n  let lastTs = null;\n  function update() {\n    fetch('/api/foto').then(r => r.json()).then(data => {\n      if (!data || !data.dataUrl) {\n        document.getElementById('photo').style.display = 'none';\n        document.getElementById('photo').classList.remove('loaded');\n        document.getElementById('emptyState').style.display = '';\n        document.getElementById('statusText').textContent = 'En attente de photo...';\n        lastTs = null;\n        return;\n      }\n      if (data.ts !== lastTs) {\n        lastTs = data.ts;\n        const img = document.getElementById('photo');\n        img.src = data.dataUrl;\n        img.onload = () => {\n          img.style.display = 'block';\n          img.classList.add('loaded');\n          document.getElementById('emptyState').style.display = 'none';\n          const d = new Date(data.ts);\n          document.getElementById('statusText').textContent = 'Mis à jour ' + d.toLocaleTimeString('fr-BE', { hour: '2-digit', minute: '2-digit' });\n        };\n      }\n    }).catch(() => {});\n  }\n  update();\n  setInterval(update, 2000);\n</script>\n</body>\n</html>",
+        "output": "str",
+        "x": 580,
+        "y": 320,
+        "wires": [
+            [
+                "ad7770c70fb4f92f"
+            ]
+        ]
+    },
+    {
+        "id": "96def53bced8e5d4",
+        "type": "http in",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "url": "/api/foto",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 380,
+        "y": 380,
+        "wires": [
+            [
+                "ec407593ca326481"
+            ]
+        ]
+    },
+    {
+        "id": "ec407593ca326481",
+        "type": "function",
+        "z": "8bb8777a74b8fc32",
+        "name": "foto store",
+        "func": "global.set('foto_atual', {\n    dataUrl: msg.payload.dataUrl,\n    name: msg.payload.name,\n    ts: msg.payload.ts\n});\nmsg.payload = { ok: true };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 380,
+        "wires": [
+            [
+                "d497852c36a26bd6"
+            ]
+        ]
+    },
+    {
+        "id": "d497852c36a26bd6",
+        "type": "http response",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "statusCode": "200",
+        "headers": {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        "x": 800,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ed435ce5e22567bc",
+        "type": "http in",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "url": "/api/foto",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 380,
+        "y": 420,
+        "wires": [
+            [
+                "6bd509e2334c6866"
+            ]
+        ]
+    },
+    {
+        "id": "6bd509e2334c6866",
+        "type": "function",
+        "z": "8bb8777a74b8fc32",
+        "name": "foto get",
+        "func": "const foto = global.get('foto_atual') || null;\nmsg.payload = foto;\nmsg.headers = { \"Content-Type\": \"application/json\", \"Access-Control-Allow-Origin\": \"*\" };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 420,
+        "wires": [
+            [
+                "de33f9fd0fba968a"
+            ]
+        ]
+    },
+    {
+        "id": "de33f9fd0fba968a",
+        "type": "http response",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 780,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "a6f153eef565f603",
+        "type": "http in",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "url": "/api/foto",
+        "method": "delete",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 380,
+        "y": 460,
+        "wires": [
+            [
+                "9e5b098d3802a8f3"
+            ]
+        ]
+    },
+    {
+        "id": "9e5b098d3802a8f3",
+        "type": "function",
+        "z": "8bb8777a74b8fc32",
+        "name": "foto delete",
+        "func": "global.set('foto_atual', null);\nmsg.payload = { ok: true };\nmsg.headers = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 460,
+        "wires": [
+            [
+                "73c2c156e21955ca"
+            ]
+        ]
+    },
+    {
+        "id": "73c2c156e21955ca",
+        "type": "http response",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 800,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "9a62d7add368c98b",
+        "type": "http in",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "url": "/page2",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 370,
+        "y": 200,
+        "wires": [
+            [
+                "7eeaf65cdb2ee06f"
+            ]
+        ]
+    },
+    {
+        "id": "7eeaf65cdb2ee06f",
+        "type": "http request",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openweathermap.org/data/2.5/weather?q=Florennes,BE&units=metric&appid=0b686b4a59b772d74c1f35a917f96a2c",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 550,
+        "y": 200,
+        "wires": [
+            [
+                "cfb5518a3645d5e7"
+            ]
+        ]
+    },
+    {
+        "id": "cfb5518a3645d5e7",
+        "type": "function",
+        "z": "8bb8777a74b8fc32",
+        "name": "function 3",
+        "func": "msg.payload = {\n    city: msg.payload.name,\n    temp: Math.round(msg.payload.main.temp),\n    desc: msg.payload.weather[0].description,\n    humidity: msg.payload.main.humidity,\n    wind: msg.payload.wind.speed\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 200,
+        "wires": [
+            [
+                "cded2721d008ae06",
+                "1395b683fac811f0"
+            ]
+        ]
+    },
+    {
+        "id": "1395b683fac811f0",
+        "type": "debug",
+        "z": "8bb8777a74b8fc32",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "cded2721d008ae06",
+        "type": "template",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Florennes</title>\n    <style>\n        body { font-family: Arial; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; text-align: center; padding-top: 50px; }\n        .card { background: rgba(0,0,0,0.4); padding: 30px; border-radius: 20px; width: 300px; margin: auto; }\n        .temp { font-size: 50px; font-weight: bold; }\n    </style>\n</head>\n<body>\n<div class=\"card\">\n    <h1>{{payload.city}}</h1>\n    <div class=\"temp\">{{payload.temp}}°</div>\n    <p>{{payload.desc}}</p>\n    <p>Humidité: {{payload.humidity}}%</p>\n    <p>Vents: {{payload.wind}} m/s</p>\n</div>\n</body>\n</html>",
+        "output": "str",
+        "x": 840,
+        "y": 180,
+        "wires": [
+            [
+                "bd7ab622da382e5f"
+            ]
+        ]
+    },
+    {
+        "id": "bd7ab622da382e5f",
+        "type": "http response",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 990,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "4fa9064f9a633270",
+        "type": "http in",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "url": "/admin",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 360,
+        "y": 540,
+        "wires": [
+            [
+                "8f18f66dabc62704"
+            ]
+        ]
+    },
+    {
+        "id": "8f18f66dabc62704",
+        "type": "template",
+        "z": "8bb8777a74b8fc32",
+        "name": "admin page",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Administration — Athénée Royal de Florennes</title>\n<link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap\" rel=\"stylesheet\">\n<style>\n  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\n\n  body {\n    font-family: 'Inter', sans-serif;\n    background: #f8f8f8;\n    color: #1a1a1a;\n    min-height: 100vh;\n    padding: 0;\n  }\n\n  /* ── TOP BAR ── */\n  .topbar {\n    background: #fff;\n    border-bottom: 1px solid #e5e5e5;\n    padding: 0 2rem;\n    height: 60px;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    position: sticky;\n    top: 0;\n    z-index: 100;\n  }\n\n  .topbar-left {\n    display: flex;\n    align-items: center;\n    gap: 12px;\n  }\n\n  .school-badge {\n    width: 32px; height: 32px;\n    background: #1a1a1a;\n    border-radius: 8px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    color: white;\n    font-size: 14px;\n    font-weight: 600;\n    letter-spacing: -0.5px;\n  }\n\n  .topbar-title {\n    font-size: 14px;\n    font-weight: 600;\n    color: #1a1a1a;\n  }\n\n  .topbar-subtitle {\n    font-size: 12px;\n    color: #888;\n    margin-top: 1px;\n  }\n\n  .btn-save {\n    background: #1a1a1a;\n    color: #fff;\n    border: none;\n    border-radius: 8px;\n    padding: 9px 20px;\n    font-family: 'Inter', sans-serif;\n    font-size: 13px;\n    font-weight: 500;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    gap: 7px;\n    transition: background 0.15s;\n  }\n\n  .btn-save:hover { background: #333; }\n  .btn-save:disabled { background: #ccc; cursor: not-allowed; }\n\n  .status-msg {\n    font-size: 12px;\n    color: #2a9d60;\n    font-weight: 500;\n    opacity: 0;\n    transition: opacity 0.3s;\n    margin-right: 8px;\n  }\n  .status-msg.visible { opacity: 1; }\n  .status-msg.error { color: #d93025; }\n\n  /* ── MAIN LAYOUT ── */\n  .page {\n    max-width: 1200px;\n    margin: 0 auto;\n    padding: 2rem;\n    display: flex;\n    flex-direction: column;\n    gap: 1.5rem;\n  }\n\n  /* ── HELP BANNER ── */\n  .help-banner {\n    background: #fffbe6;\n    border: 1px solid #ffe58f;\n    border-radius: 10px;\n    padding: 14px 18px;\n    display: flex;\n    align-items: flex-start;\n    gap: 12px;\n    font-size: 13px;\n    color: #5a4500;\n    line-height: 1.55;\n  }\n\n  .help-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }\n\n  /* ── GRID ── */\n  .grid {\n    display: grid;\n    grid-template-columns: 1fr 1fr 1fr 1fr;\n    gap: 1.25rem;\n  }\n\n  /* ── SECTION CARD ── */\n  .section-card {\n    background: #fff;\n    border: 1px solid #e5e5e5;\n    border-radius: 12px;\n    overflow: hidden;\n  }\n\n  .section-head {\n    padding: 14px 16px 12px;\n    border-bottom: 1px solid #f0f0f0;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n  }\n\n  .section-title {\n    font-size: 13px;\n    font-weight: 600;\n    color: #1a1a1a;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n  }\n\n  .section-dot {\n    width: 8px; height: 8px;\n    border-radius: 50%;\n    flex-shrink: 0;\n  }\n\n  .dot-red    { background: #e8533a; }\n  .dot-blue   { background: #3a7de8; }\n  .dot-green  { background: #2db87e; }\n  .dot-purple { background: #8b5cf6; }\n\n  .section-count {\n    font-size: 11px;\n    color: #aaa;\n    font-weight: 400;\n  }\n\n  .section-help {\n    font-size: 11px;\n    color: #aaa;\n    padding: 8px 16px;\n    background: #fafafa;\n    border-bottom: 1px solid #f0f0f0;\n    line-height: 1.45;\n  }\n\n  .section-body {\n    padding: 10px 12px;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    min-height: 60px;\n  }\n\n  /* ── ROW ── */\n  .row-item {\n    display: flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .row-num {\n    font-size: 11px;\n    color: #ccc;\n    width: 16px;\n    text-align: right;\n    flex-shrink: 0;\n    font-variant-numeric: tabular-nums;\n  }\n\n  .row-input {\n    flex: 1;\n    border: 1px solid #e5e5e5;\n    border-radius: 6px;\n    padding: 7px 10px;\n    font-family: 'Inter', sans-serif;\n    font-size: 13px;\n    color: #1a1a1a;\n    outline: none;\n    transition: border-color 0.15s, box-shadow 0.15s;\n    background: #fff;\n    min-width: 0;\n  }\n\n  .row-input:focus {\n    border-color: #1a1a1a;\n    box-shadow: 0 0 0 2px rgba(26,26,26,0.06);\n  }\n\n  .row-input::placeholder { color: #bbb; }\n\n  .btn-del {\n    width: 22px; height: 22px;\n    border: none; background: none;\n    color: #ccc; font-size: 16px;\n    cursor: pointer; border-radius: 4px;\n    display: flex; align-items: center; justify-content: center;\n    flex-shrink: 0;\n    transition: color 0.15s, background 0.15s;\n    line-height: 1;\n  }\n\n  .btn-del:hover { color: #d93025; background: #fff0f0; }\n\n  .section-footer {\n    padding: 8px 12px 12px;\n  }\n\n  .btn-add {\n    width: 100%;\n    padding: 7px;\n    border: 1px dashed #ddd;\n    border-radius: 6px;\n    background: #fafafa;\n    color: #888;\n    font-family: 'Inter', sans-serif;\n    font-size: 12px;\n    cursor: pointer;\n    transition: border-color 0.15s, color 0.15s, background 0.15s;\n  }\n\n  .btn-add:hover { border-color: #1a1a1a; color: #1a1a1a; background: #f0f0f0; }\n\n  .max-notice {\n    font-size: 11px;\n    color: #f59e0b;\n    text-align: center;\n    padding: 4px;\n    display: none;\n  }\n\n  /* ── EMPTY STATE ── */\n  .empty-hint {\n    font-size: 12px;\n    color: #ccc;\n    text-align: center;\n    padding: 12px 0 4px;\n    font-style: italic;\n  }\n\n  /* ── BOTTOM BAR: SAVE ── */\n  .bottom-bar {\n    background: #fff;\n    border: 1px solid #e5e5e5;\n    border-radius: 12px;\n    padding: 16px 20px;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n  }\n\n  .bottom-hint {\n    font-size: 13px;\n    color: #888;\n    line-height: 1.5;\n  }\n\n  .bottom-hint strong { color: #1a1a1a; }\n\n  .btn-save-big {\n    background: #1a1a1a;\n    color: #fff;\n    border: none;\n    border-radius: 9px;\n    padding: 12px 28px;\n    font-family: 'Inter', sans-serif;\n    font-size: 14px;\n    font-weight: 600;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    transition: background 0.15s;\n    white-space: nowrap;\n  }\n\n  .btn-save-big:hover { background: #333; }\n  .btn-save-big:disabled { background: #ccc; cursor: not-allowed; }\n\n  @media (max-width: 900px) {\n    .grid { grid-template-columns: 1fr 1fr; }\n  }\n  @media (max-width: 580px) {\n    .grid { grid-template-columns: 1fr; }\n    .page { padding: 1rem; }\n    .bottom-bar { flex-direction: column; gap: 12px; align-items: stretch; }\n  }\n</style>\n</head>\n<body>\n\n<!-- TOP BAR -->\n<div class=\"topbar\">\n  <div class=\"topbar-left\">\n    <div class=\"school-badge\">AR</div>\n    <div>\n      <div class=\"topbar-title\">Athénée Royal de Florennes</div>\n      <div class=\"topbar-subtitle\">Panneau d'administration</div>\n    </div>\n  </div>\n  <div style=\"display:flex;align-items:center;gap:8px;\">\n    <span class=\"status-msg\" id=\"statusMsg\"></span>\n    <button class=\"btn-save\" id=\"btnSaveTop\" onclick=\"saveAll()\">\n      ✓ &nbsp;Enregistrer\n    </button>\n  </div>\n</div>\n\n<div class=\"page\">\n\n  <!-- HELP BANNER -->\n  <div class=\"help-banner\">\n    <span class=\"help-icon\">💡</span>\n    <div>\n      <strong>Comment utiliser cette page ?</strong><br>\n      Remplissez les cases dans chaque colonne, puis cliquez sur <strong>« Enregistrer les modifications »</strong> en bas de page.\n      Les informations s'afficheront automatiquement sur l'écran de l'école (<code>/page3</code>) dans les 10 secondes.\n      Pour supprimer une ligne, cliquez sur le <strong>×</strong> à droite de la case. Les données sont sauvegardées jusqu'au prochain redémarrage du système.\n    </div>\n  </div>\n\n  <!-- 4 COLONNES -->\n  <div class=\"grid\">\n\n    <!-- Professeurs Absents -->\n    <div class=\"section-card\">\n      <div class=\"section-head\">\n        <div class=\"section-title\">\n          <span class=\"section-dot dot-red\"></span>\n          Professeurs Absents\n        </div>\n        <span class=\"section-count\" id=\"cnt-absents\">0 / 9</span>\n      </div>\n      <div class=\"section-help\">📌 Entrez le nom d'un professeur absent par ligne. Maximum 9 noms.</div>\n      <div class=\"section-body\" id=\"rows-absents\"></div>\n      <div class=\"section-footer\">\n        <div class=\"max-notice\" id=\"max-absents\">⚠️ Maximum atteint (9 professeurs)</div>\n        <button class=\"btn-add\" id=\"add-absents\" onclick=\"addRow('absents')\">+ Ajouter un professeur</button>\n      </div>\n    </div>\n\n    <!-- Absence à Venir -->\n    <div class=\"section-card\">\n      <div class=\"section-head\">\n        <div class=\"section-title\">\n          <span class=\"section-dot dot-blue\"></span>\n          Absence à Venir\n        </div>\n        <span class=\"section-count\" id=\"cnt-avenir\">0 / 9</span>\n      </div>\n      <div class=\"section-help\">📅 Absences prévues les prochains jours. Maximum 9 entrées.</div>\n      <div class=\"section-body\" id=\"rows-avenir\"></div>\n      <div class=\"section-footer\">\n        <div class=\"max-notice\" id=\"max-avenir\">⚠️ Maximum atteint (9 entrées)</div>\n        <button class=\"btn-add\" id=\"add-avenir\" onclick=\"addRow('avenir')\">+ Ajouter une absence</button>\n      </div>\n    </div>\n\n    <!-- Activités Scolaires -->\n    <div class=\"section-card\">\n      <div class=\"section-head\">\n        <div class=\"section-title\">\n          <span class=\"section-dot dot-purple\"></span>\n          Activités Scolaires\n        </div>\n        <span class=\"section-count\" id=\"cnt-activites\"></span>\n      </div>\n      <div class=\"section-help\">🎒 Sorties, événements, voyages scolaires... Autant de lignes que nécessaire.</div>\n      <div class=\"section-body\" id=\"rows-activites\"></div>\n      <div class=\"section-footer\">\n        <button class=\"btn-add\" onclick=\"addRow('activites')\">+ Ajouter une activité</button>\n      </div>\n    </div>\n\n    <!-- Annonces -->\n    <div class=\"section-card\">\n      <div class=\"section-head\">\n        <div class=\"section-title\">\n          <span class=\"section-dot dot-green\"></span>\n          Annonces\n        </div>\n        <span class=\"section-count\" id=\"cnt-comunicados\"></span>\n      </div>\n      <div class=\"section-help\">📢 Messages importants, rappels, informations générales pour toute l'école.</div>\n      <div class=\"section-body\" id=\"rows-comunicados\"></div>\n      <div class=\"section-footer\">\n        <button class=\"btn-add\" onclick=\"addRow('comunicados')\">+ Ajouter une annonce</button>\n      </div>\n    </div>\n\n  </div>\n\n  <!-- BOTTOM SAVE BAR -->\n  <div class=\"bottom-bar\">\n    <div class=\"bottom-hint\">\n      <strong>Prêt à publier ?</strong><br>\n      Vérifiez vos informations ci-dessus, puis cliquez sur le bouton pour les envoyer à l'écran de l'école.\n    </div>\n    <button class=\"btn-save-big\" id=\"btnSaveBottom\" onclick=\"saveAll()\">\n      ✓ &nbsp;Enregistrer les modifications\n    </button>\n  </div>\n\n</div>\n\n<script>\n  var MAX_PROF = 9;\n  var cols = ['absents','avenir','activites','comunicados'];\n  var data = { absents: [], avenir: [], activites: [], comunicados: [] };\n\n  function showStatus(msg, isErr) {\n    var el = document.getElementById('statusMsg');\n    el.textContent = msg;\n    el.classList.toggle('error', !!isErr);\n    el.classList.add('visible');\n    clearTimeout(el._t);\n    el._t = setTimeout(function(){ el.classList.remove('visible'); }, 4000);\n  }\n\n  function updateCount(col) {\n    var filled = data[col].filter(function(v){ return v.trim(); }).length;\n    var isProf = col === 'absents' || col === 'avenir';\n    var total  = data[col].length;\n    var el = document.getElementById('cnt-' + col);\n    if (el) el.textContent = isProf ? (filled + ' / 9') : (filled > 0 ? filled + ' entrée' + (filled > 1 ? 's' : '') : '');\n    if (isProf) {\n      var maxEl  = document.getElementById('max-' + col);\n      var addBtn = document.getElementById('add-' + col);\n      var atMax  = total >= MAX_PROF;\n      if (maxEl)  maxEl.style.display  = atMax ? 'block' : 'none';\n      if (addBtn) addBtn.style.display = atMax ? 'none'  : '';\n    }\n  }\n\n  function renderRows(col) {\n    var area = document.getElementById('rows-' + col);\n    area.innerHTML = '';\n    if (data[col].length === 0) {\n      var hint = document.createElement('div');\n      hint.className = 'empty-hint';\n      hint.textContent = 'Aucune entrée — cliquez sur « + Ajouter » ci-dessous';\n      area.appendChild(hint);\n      updateCount(col);\n      return;\n    }\n    data[col].forEach(function(val, idx) {\n      var row = document.createElement('div');\n      row.className = 'row-item';\n\n      var num = document.createElement('span');\n      num.className = 'row-num';\n      num.textContent = idx + 1;\n\n      var inp = document.createElement('input');\n      inp.className = 'row-input';\n      inp.type = 'text';\n      inp.value = val;\n      inp.placeholder = col === 'absents'    ? 'Ex : M. Dupont' :\n                        col === 'avenir'     ? 'Ex : Mme Martin – vendredi' :\n                        col === 'activites'  ? 'Ex : Sortie au musée – 3e année' :\n                                              'Ex : Réunion parents le 15/05';\n      inp.addEventListener('input', (function(i){ return function(){ data[col][i] = this.value; updateCount(col); }; })(idx));\n\n      var del = document.createElement('button');\n      del.className = 'btn-del';\n      del.textContent = '×';\n      del.title = 'Supprimer cette ligne';\n      del.addEventListener('click', (function(i){ return function(){ data[col].splice(i,1); renderRows(col); }; })(idx));\n\n      row.appendChild(num);\n      row.appendChild(inp);\n      row.appendChild(del);\n      area.appendChild(row);\n    });\n    updateCount(col);\n  }\n\n  function addRow(col) {\n    var max = (col === 'absents' || col === 'avenir') ? MAX_PROF : 999;\n    if (data[col].length >= max) return;\n    data[col].push('');\n    renderRows(col);\n    var inputs = document.getElementById('rows-' + col).querySelectorAll('input');\n    if (inputs.length) inputs[inputs.length - 1].focus();\n  }\n\n  function getValues(col) {\n    return data[col].filter(function(v){ return v.trim(); });\n  }\n\n  function setLoading(loading) {\n    document.getElementById('btnSaveTop').disabled    = loading;\n    document.getElementById('btnSaveBottom').disabled = loading;\n  }\n\n  async function saveAll() {\n    setLoading(true);\n    try {\n      var payload = {\n        absents:     getValues('absents'),\n        avenir:      getValues('avenir'),\n        activites:   getValues('activites'),\n        comunicados: getValues('comunicados'),\n        ts: Date.now()\n      };\n      var r = await fetch('/api/ecole', {\n        method: 'POST',\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify(payload)\n      });\n      if (!r.ok) throw new Error('HTTP ' + r.status);\n      showStatus('✓ Modifications enregistrées avec succès');\n    } catch(e) {\n      showStatus('Erreur : ' + e.message, true);\n    } finally {\n      setLoading(false);\n    }\n  }\n\n  async function loadExisting() {\n    try {\n      var r = await fetch('/api/ecole');\n      if (r.ok) {\n        var d = await r.json();\n        if (d) {\n          data.absents     = d.absents     || [];\n          data.avenir      = d.avenir      || [];\n          data.activites   = d.activites   || [];\n          data.comunicados = d.comunicados || [];\n          cols.forEach(function(c){ renderRows(c); });\n        }\n      }\n    } catch(e){}\n  }\n\n  cols.forEach(function(c){ renderRows(c); });\n  loadExisting();\n</script>\n</body>\n</html>",
+        "output": "str",
+        "x": 560,
+        "y": 540,
+        "wires": [
+            [
+                "230b8d7a7d61f68d"
+            ]
+        ]
+    },
+    {
+        "id": "230b8d7a7d61f68d",
+        "type": "http response",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "statusCode": "200",
+        "headers": {
+            "Content-Type": "text/html; charset=utf-8"
+        },
+        "x": 800,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "07cb207d593b6816",
+        "type": "http in",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "url": "/api/ecole",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 380,
+        "y": 600,
+        "wires": [
+            [
+                "264ca2ac5dc774f1"
+            ]
+        ]
+    },
+    {
+        "id": "264ca2ac5dc774f1",
+        "type": "function",
+        "z": "8bb8777a74b8fc32",
+        "name": "ecole store",
+        "func": "global.set('ecole_data', {\n  absents:     msg.payload.absents     || [],\n  avenir:      msg.payload.avenir      || [],\n  activites:   msg.payload.activites   || [],\n  comunicados: msg.payload.comunicados || [],\n  ts: msg.payload.ts || Date.now()\n});\nmsg.payload = { ok: true };\nmsg.headers = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 600,
+        "wires": [
+            [
+                "57b9156af256ee81"
+            ]
+        ]
+    },
+    {
+        "id": "57b9156af256ee81",
+        "type": "http response",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 810,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "2e0d156e04ff48d0",
+        "type": "http in",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "url": "/api/ecole",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 380,
+        "y": 640,
+        "wires": [
+            [
+                "6445c2b083c82d9c"
+            ]
+        ]
+    },
+    {
+        "id": "6445c2b083c82d9c",
+        "type": "function",
+        "z": "8bb8777a74b8fc32",
+        "name": "ecole get",
+        "func": "const d = global.get('ecole_data') || { absents: [], avenir: [], activites: [], comunicados: [], ts: 0 };\nmsg.payload = d;\nmsg.headers = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 640,
+        "wires": [
+            [
+                "9ca21cd36f99134f"
+            ]
+        ]
+    },
+    {
+        "id": "9ca21cd36f99134f",
+        "type": "http response",
+        "z": "8bb8777a74b8fc32",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 790,
+        "y": 640,
+        "wires": []
+    }
+]
